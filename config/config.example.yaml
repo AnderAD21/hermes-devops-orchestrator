@@ -1,0 +1,54 @@
+# =============================================================================
+# Hermes DevOps Orchestrator — Configuración Sanitizada (config.example.yaml)
+# =============================================================================
+# Archivo de referencia para ~/.hermes/config.yaml
+# Optimizado para FinOps en Google Cloud Vertex AI y ejecución aislada en Docker.
+# =============================================================================
+
+model:
+  # Modelo principal: balance óptimo entre capacidad agéntica, latencia y costo por millón de tokens
+  default: "google/gemini-3.5-flash"
+  # Proveedor nativo de Google Cloud Platform (usa ADC en lugar de API Key estática)
+  provider: "vertex"
+
+# Parámetros nativos de Google Cloud Vertex AI
+vertex:
+  project_id: "hermes-devops-agent"
+  region: "global"
+
+# Optimización FinOps: control de razonamiento y modelos auxiliares ligeros
+reasoning:
+  effort: "low"  # Reduce consumo de tokens de pensamiento interno en tareas rutinarias
+
+auxiliary:
+  # Tareas secundarias (compresión de contexto, títulos, resúmenes) usan Flash-Lite
+  model: "google/gemini-3.5-flash-lite"
+  provider: "vertex"
+
+compression:
+  enabled: true
+
+# =============================================================================
+# Ejecución de Comandos y Sandboxing con Docker (Hito 2)
+# =============================================================================
+terminal:
+  backend: "docker"
+  cwd: "/workspace"
+  timeout: 180
+  lifetime_seconds: 300
+  docker_image: "hermes-opencode-sandbox:latest"
+  # Seguridad: montar únicamente el directorio de trabajo del proyecto actual
+  docker_mount_cwd_to_workspace: true
+  # Ejecutar como usuario sin privilegios root (UID/GID del host) y eliminar capacidades SETUID/SETGID
+  docker_run_as_host_user: true
+  process_wait_auto_notify: true
+  client_env_passthrough: []
+
+# =============================================================================
+# Tareas Programadas y Tablero Kanban
+# =============================================================================
+cron:
+  catch_up_missed: true
+
+kanban:
+  review_dispatch: true

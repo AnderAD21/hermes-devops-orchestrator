@@ -1,0 +1,75 @@
+# =============================================================================
+# Variables de Entorno y Secretos (CRÍTICO - NUNCA SUBIR)
+# =============================================================================
+.env
+.env.*
+!.env.example
+config/.env
+config/*.secret.*
+config/config.yaml
+
+# =============================================================================
+# Credenciales Cloud (GCP / Vertex AI / Azure / SSH)
+# =============================================================================
+*.json
+!package.json
+!tsconfig.json
+!*.schema.json
+application_default_credentials.json
+*service-account*.json
+*credentials*.json
+*.pem
+*.key
+*.pub
+id_rsa*
+id_ed25519*
+
+# =============================================================================
+# Bases de Datos Locales y Estado de Hermes Agent
+# =============================================================================
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.lock
+state/
+sessions/
+memories/
+pairing/
+
+# =============================================================================
+# Python / Runtime / Caché
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =============================================================================
+# Infraestructura como Código (Terraform / Bicep)
+# =============================================================================
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+
+# =============================================================================
+# Logs, Temporales y Sistema Operativo
+# =============================================================================
+*.log
+logs/
+tmp/
+temp/
+.DS_Store
+Thumbs.db
+*~
+.idea/
+.vscode/
